@@ -30,3 +30,14 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: WebGL
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: build
+      - uses: actions/cache@v2
+        with:
+          path: ../../Library
+          key: Library-Pong-WebGL
+          restore-keys: |
+            Library-Pong-
+            Library-
