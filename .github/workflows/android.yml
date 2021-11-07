@@ -24,12 +24,21 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - name: create android keystore
+        run: |
+          echo "${{ secrets.RELEASE_KEYSTORE }}" > user.keystore.asc
+          gpg -d --passphrase "${{ secrets.RELASE_KEYSTORE_PASSPHRASE }}" --batch user.keystore.asc > user.keystore
 
       - uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: Android
+          androidAppBundle: true
+          androidKeystoreName: user.keystore
+          androidKeystorePass: ${{ secrets.RELEASE_KEYSTORE_PASSPHRASE }}
+          androidKeyaliasName: pong
+          androidKeyaliasPass: ${{ secrets.RELEASE_KEYSTORE_PASSPHRASE }}
       - uses: actions/upload-artifact@v2
         with:
           name: Android-Build
