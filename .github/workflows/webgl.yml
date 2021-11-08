@@ -7,9 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   workflow_dispatch: {}
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -29,5 +26,5 @@ jobs:
           targetPlatform: WebGL
       - uses: actions/upload-artifact@v2
         with:
-          name: Build
+          name: Build-WebGL
           path: build
